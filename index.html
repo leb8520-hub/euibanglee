@@ -24,7 +24,8 @@
       </a>
       <div class="flex items-center space-x-5 text-sm font-medium text-slate-600">
         <a href="#research" class="hover:text-blue-600 transition">Research</a>
-        <a href="#archive" class="hover:text-blue-600 transition">Publications &amp; CV</a>
+        <a href="#archive" onclick="switchTab('teaching', document.getElementById('tab-teaching'))" class="hover:text-blue-600 transition">Teaching</a>
+        <a href="#archive" onclick="switchTab('pubs', document.getElementById('tab-pubs'))" class="hover:text-blue-600 transition">Publications &amp; CV</a>
         <a href="https://orcid.org/0000-0003-4762-0541" target="_blank" class="text-slate-900 hover:text-blue-600 transition">ORCID ↗</a>
       </div>
     </div>
@@ -50,6 +51,9 @@
       <div class="flex flex-wrap gap-3 text-sm">
         <a href="#archive" onclick="switchTab('pubs', document.getElementById('tab-pubs'))" class="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition font-medium">
           논문 실적 보기 (18편)
+        </a>
+        <a href="#archive" onclick="switchTab('teaching', document.getElementById('tab-teaching'))" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+          수업 자료 및 데모 링크
         </a>
         <a href="#archive" onclick="switchTab('cv', document.getElementById('tab-cv'))" class="px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition font-medium">
           주요 경력 및 학력
@@ -95,14 +99,14 @@
       <button id="tab-pubs" onclick="switchTab('pubs', this)" class="tab-btn active px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 transition">
         Publications (18)
       </button>
+      <button id="tab-teaching" onclick="switchTab('teaching', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
+        Teaching &amp; Stack
+      </button>
       <button id="tab-cv" onclick="switchTab('cv', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
         Career &amp; Education
       </button>
       <button id="tab-patents" onclick="switchTab('patents', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
         Patents &amp; Awards
-      </button>
-      <button id="tab-teaching" onclick="switchTab('teaching', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
-        Teaching &amp; Stack
       </button>
     </div>
 
@@ -319,7 +323,115 @@
       </div>
     </div>
 
-    <!-- TAB 2: Career & Education -->
+    <!-- TAB 2: Teaching & Stack -->
+    <div id="panel-teaching" class="tab-panel hidden space-y-6">
+      <!-- Active Course Links & Materials -->
+      <div class="bg-white p-6 rounded-xl border border-slate-200 text-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3 mb-5">
+          <h3 class="font-bold text-base text-slate-900">현재 수업 자료 및 제출 링크 (Course Materials &amp; Links)</h3>
+          <span class="text-xs text-slate-500">클릭 시 새 창에서 열립니다</span>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <!-- 자연어처리 -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-bold text-slate-900">자연어처리 (Natural Language Processing)</h4>
+              <span class="text-[11px] font-semibold text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded">실습·강의</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">실습 환경 구성, 공개 강의자료, 과제 및 출석대체 증빙 제출</p>
+            <div class="grid grid-cols-2 gap-2 text-xs font-medium">
+              <a href="https://gofile.me/7WVaI/bxpt8l3OP" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
+                <span>환경구성</span><span>↗</span>
+              </a>
+              <a href="https://gofile.me/7WVaI/yNNOEnyxM" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
+                <span>자료 (공개용)</span><span>↗</span>
+              </a>
+              <a href="https://QuickConnect.to/bangheon/sharing/EywGVo2II" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 hover:bg-blue-100 transition">
+                <span>과제물 제출</span><span>↗</span>
+              </a>
+              <a href="https://QuickConnect.to/bangheon/sharing/umoJqFjdB" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 hover:bg-emerald-100 transition">
+                <span>출석대체 증빙</span><span>↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 운영체제 -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-bold text-slate-900">운영체제 (Operating Systems)</h4>
+              <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-100/80 px-2 py-0.5 rounded">실습·강의</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">실습 환경 구성, 공개 강의자료, 과제 및 출석대체 증빙 제출</p>
+            <div class="grid grid-cols-2 gap-2 text-xs font-medium">
+              <a href="https://gofile.me/7WVaI/3LehVdKqz" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
+                <span>환경구성</span><span>↗</span>
+              </a>
+              <a href="https://gofile.me/7WVaI/41lUEQhpe" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
+                <span>자료 (공개용)</span><span>↗</span>
+              </a>
+              <a href="https://bangheon.quickconnect.to/sharing/h2Iz6cdiL" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 hover:bg-blue-100 transition">
+                <span>과제물 제출</span><span>↗</span>
+              </a>
+              <a href="https://bangheon.quickconnect.to/sharing/DT3lkEuhd" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 hover:bg-emerald-100 transition">
+                <span>출석대체 증빙</span><span>↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- AI 융합 교육 / 인터랙티브 데모 -->
+          <div class="md:col-span-2 p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="font-bold text-slate-900">Educator-in-the-Loop AI Demo</h4>
+                <span class="text-[11px] font-semibold text-slate-700 bg-slate-200/80 px-2 py-0.5 rounded">Interactive Demo</span>
+              </div>
+              <p class="text-xs text-slate-500">Human-in-the-Loop 기반 AI 수업 운영 및 학습 보조 인터랙티브 데모 프로토타입</p>
+            </div>
+            <a href="https://educator-in-the-loop-demo.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg hover:bg-slate-800 transition whitespace-nowrap">
+              데모 실행하기 ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Existing Courses & Lab Stack -->
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-base text-slate-900 mb-3">강의 과목 (Courses)</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터사이언스</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터마이닝</span>
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">자연어처리</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">AI최신기술세미나</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터베이스</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">확률과통계</span>
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">운영체제</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">경영정보시스템</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">IT산업론</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">텔레인프라서비스</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">e비즈니스전략</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border border-slate-200">
+          <h3 class="font-bold text-base text-slate-900 mb-3">실습 및 연구 스택 (Lab Stack)</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">Python</span>
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">PyTorch</span>
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">TensorFlow</span>
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">CUDA</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">R</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">SAS</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">Docker</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">Kubernetes</span>
+            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">Oracle DB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Career & Education -->
     <div id="panel-cv" class="tab-panel hidden">
       <div class="grid md:grid-cols-3 gap-8 text-sm">
         <div class="md:col-span-2 bg-white p-6 rounded-xl border border-slate-200">
@@ -385,18 +497,18 @@
 
           <div class="bg-white p-6 rounded-xl border border-slate-200">
             <h3 class="font-bold text-base text-slate-900 border-b pb-3 mb-4">학술 활동</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              <strong>• Editorial Board member  · </strong>  Springer Nature<em>Humanities and Social Sciences Communications(AHCI/SSCI, JCI Rank in Category: First place (1/408) in Humanities, Interdisciplinary; and Second place (2/271) in Social Sciences, Interdisciplinary )</em> 
+            <p class="text-xs text-slate-600 leading-relaxed mb-2">
+              <strong>• Editorial Board member · </strong> Springer Nature <em>Humanities and Social Sciences Communications (AHCI/SSCI, JCI Rank in Category: First place (1/408) in Humanities, Interdisciplinary; and Second place (2/271) in Social Sciences, Interdisciplinary)</em>
             </p>
             <p class="text-xs text-slate-600 leading-relaxed">
-              <strong>• Peer Reviewer  · </strong>  IEEE Transactions on Cybernetics 등 주요 국제 저널 
+              <strong>• Peer Reviewer · </strong> IEEE Transactions on Cybernetics 등 주요 국제 저널
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TAB 3: Patents & Awards -->
+    <!-- TAB 4: Patents & Awards -->
     <div id="panel-patents" class="tab-panel hidden">
       <div class="grid md:grid-cols-2 gap-6 text-sm">
         <div class="bg-white p-6 rounded-xl border border-slate-200">
@@ -446,43 +558,6 @@
               <span class="text-xs text-slate-500">한국지능정보시스템학회</span>
             </li>
           </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 4: Teaching & Stack -->
-    <div id="panel-teaching" class="tab-panel hidden">
-      <div class="grid md:grid-cols-2 gap-6 text-sm">
-        <div class="bg-white p-6 rounded-xl border border-slate-200">
-          <h3 class="font-bold text-base text-slate-900 mb-3">강의 과목 (Courses)</h3>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터사이언스</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터마이닝</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">자연어처리</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">AI최신기술세미나</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터베이스</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">확률과통계</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">운영체제</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">경영정보시스템</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">IT산업론</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">텔레인프라서비스</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">e비즈니스전략</span>
-          </div>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl border border-slate-200">
-          <h3 class="font-bold text-base text-slate-900 mb-3">실습 및 연구 스택 (Lab Stack)</h3>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">Python</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">PyTorch</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">TensorFlow</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">CUDA</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">R</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">SAS</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">Docker</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">Kubernetes</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">Oracle DB</span>
-          </div>
         </div>
       </div>
     </div>
