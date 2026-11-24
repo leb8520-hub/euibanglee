@@ -24,7 +24,7 @@
       </a>
       <div class="flex items-center space-x-5 text-sm font-medium text-slate-600">
         <a href="#research" class="hover:text-blue-600 transition">Research</a>
-        <a href="#archive" onclick="switchTab('teaching', document.getElementById('tab-teaching'))" class="hover:text-blue-600 transition">Teaching</a>
+        <a href="#archive" onclick="switchTab('teaching', document.getElementById('tab-teaching'))" class="hover:text-blue-600 transition">Teaching &amp; Q&amp;A</a>
         <a href="#archive" onclick="switchTab('pubs', document.getElementById('tab-pubs'))" class="hover:text-blue-600 transition">Publications &amp; CV</a>
         <a href="https://orcid.org/0000-0003-4762-0541" target="_blank" class="text-slate-900 hover:text-blue-600 transition">ORCID ↗</a>
       </div>
@@ -53,7 +53,7 @@
           논문 실적 보기 (18편)
         </a>
         <a href="#archive" onclick="switchTab('teaching', document.getElementById('tab-teaching'))" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
-          수업 자료 및 링크
+          수업 자료 및 Q&amp;A
         </a>
         <a href="#archive" onclick="switchTab('cv', document.getElementById('tab-cv'))" class="px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition font-medium">
           주요 경력 및 학력
@@ -378,8 +378,47 @@
               </a>
             </div>
           </div>
+        </div>
+      </div>
 
+      <!-- 수업 Q&A 게시판 (Google Forms + Google Sheets 연동 완료) -->
+      <div class="bg-white p-6 rounded-xl border border-slate-200 text-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3 mb-5">
+          <div>
+            <h3 class="font-bold text-base text-slate-900">수업 Q&amp;A 게시판 (Course Q&amp;A)</h3>
+            <p class="text-xs text-slate-500 mt-0.5">질문을 남겨주시면 교수님 확인 후 답변이 등록됩니다.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="loadQnaFromSheet()" class="px-3 py-2 bg-white border border-slate-300 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-50 transition" title="목록 새로고침">
+              ↻ 새로고침
+            </button>
+            <a href="https://forms.gle/ixFfop3abdvKWKz46" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-white border border-slate-300 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-50 transition">
+              새 창으로 열기 ↗
+            </a>
+            <button onclick="toggleQnaForm()" class="px-3.5 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg hover:bg-slate-800 transition">
+              + 질문 남기기
+            </button>
+          </div>
+        </div>
 
+        <!-- 질문 작성 폼 (토글식 Google Form 임베드) -->
+        <div id="qna-form-box" class="hidden mb-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
+          <div class="flex justify-between items-center mb-3">
+            <span class="text-xs font-semibold text-slate-700">질문 작성 (Google Form)</span>
+            <button onclick="toggleQnaForm()" class="text-xs text-slate-500 hover:text-slate-800 font-medium">닫기 ✕</button>
+          </div>
+          <iframe 
+            src="https://forms.gle/ixFfop3abdvKWKz46" 
+            width="100%" height="520" frameborder="0" marginheight="0" marginwidth="0" class="rounded-lg bg-white border border-slate-200">
+            로드 중…
+          </iframe>
+        </div>
+
+        <!-- 질문 & 답변 목록 (Google Sheets 실시간 자동 렌더링 영역) -->
+        <div id="qna-list" class="space-y-4">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-500">
+            질문 및 답변 목록을 불러오는 중입니다...
+          </div>
         </div>
       </div>
  
@@ -563,11 +602,16 @@
         b.classList.remove('active');
         b.classList.add('text-slate-600', 'bg-white');
       });
-      btn.classList.add('active');
-      btn.classList.remove('text-slate-600', 'bg-white');
+      if (btn) {
+        btn.classList.add('active');
+        btn.classList.remove('text-slate-600', 'bg-white');
+      }
 
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-      document.getElementById('panel-' + tabName).classList.remove('hidden');
+      const targetPanel = document.getElementById('panel-' + tabName);
+      if (targetPanel) {
+        targetPanel.classList.remove('hidden');
+      }
     }
 
     function filterPubs(category, btn) {
@@ -591,6 +635,121 @@
         }
       });
     }
+
+    function toggleQnaForm() {
+      document.getElementById('qna-form-box').classList.toggle('hidden');
+    }
+
+    // 연동된 Google Sheets ('홈페이지프로필_QA(응답)' -> '설문지 응답 시트1')
+    const SHEET_ID = "1U7cxMnn7PQ5oJhew_7MJXLzvmj-BqproG__VFKngz2w";
+    const SHEET_NAME = "설문지 응답 시트1";
+
+    function maskStudentInfo(rawAuthor) {
+      if (!rawAuthor) return '익명';
+      const parts = String(rawAuthor).trim().split(/\s+/);
+      const name = parts.length > 1 ? parts[parts.length - 1] : parts[0];
+      if (name.length >= 2) {
+        return name[0] + '*' + (name.length > 2 ? name.slice(2) : '');
+      }
+      return name;
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    window.renderQnaSheetData = function(response) {
+      const container = document.getElementById("qna-list");
+      try {
+        if (!response || response.status === 'error') {
+          throw new Error("시트 응답 오류");
+        }
+        const rows = (response.table && response.table.rows) ? [...response.table.rows].reverse() : [];
+        let html = "";
+
+        rows.forEach(r => {
+          const c = r.c || [];
+          const getVal = (idx) => {
+            if (!c[idx]) return '';
+            return (c[idx].f !== undefined && c[idx].f !== null) ? String(c[idx].f) : (c[idx].v !== undefined && c[idx].v !== null ? String(c[idx].v) : '');
+          };
+
+          // A(0): 타임스탬프, B(1): 학번 이름, C(2): 과목명, D(3): 질문 내용, E(4): 공개여부, F(5): 교수님 답변
+          const timestamp = getVal(0);
+          const rawAuthor = getVal(1);
+          const course = getVal(2);
+          const question = getVal(3);
+          const isPublic = getVal(4);
+          const answer = getVal(5);
+
+          if (!question || question === '질문 내용') return;
+
+          const pubVal = isPublic.trim().toUpperCase();
+          if (pubVal !== "Y" && pubVal !== "공개" && pubVal !== "예") return;
+
+          const displayAuthor = escapeHtml(maskStudentInfo(rawAuthor));
+          const displayCourse = escapeHtml(course || '일반');
+          const displayDate = escapeHtml(timestamp.split(' ').slice(0, 3).join(' '));
+          const displayQuestion = escapeHtml(question).replace(/\r?\n/g, '<br>');
+          const displayAnswer = escapeHtml(answer).replace(/\r?\n/g, '<br>');
+
+          html += `
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+              <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5">
+                <span class="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">${displayCourse}</span>
+                <span>${displayDate} · ${displayAuthor}</span>
+              </div>
+              <p class="font-medium text-slate-900 mb-3">Q. ${displayQuestion}</p>
+              ${displayAnswer ? `
+                <div class="p-3.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs leading-relaxed">
+                  <span class="font-bold text-emerald-700 block mb-1">A. 교수님 답변</span>
+                  ${displayAnswer}
+                </div>
+              ` : `<p class="text-xs text-slate-400 italic">답변 준비 중입니다.</p>`}
+            </div>`;
+        });
+
+        if (html) {
+          container.innerHTML = html;
+        } else {
+          container.innerHTML = `
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-500">
+              등록된 공개 Q&amp;A가 없습니다. (시트의 E열 '공개여부'에 'Y' 또는 '공개'로 표시된 질문만 이곳에 게시됩니다.)
+            </div>`;
+        }
+      } catch (e) {
+        console.error("Q&A 렌더링 오류:", e);
+        container.innerHTML = `
+          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 leading-relaxed">
+            <strong>시트 데이터 불러오기 실패:</strong> Google Sheets의 공유 설정('링크가 있는 모든 사용자: 뷰어')과 시트 이름('설문지 응답 시트1')을 확인해 주세요.
+          </div>`;
+      }
+    };
+
+    function loadQnaFromSheet() {
+      const container = document.getElementById("qna-list");
+      const oldScript = document.getElementById("gviz-qna-script");
+      if (oldScript) oldScript.remove();
+
+      const script = document.createElement("script");
+      script.id = "gviz-qna-script";
+      script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:renderQnaSheetData&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      script.onerror = function() {
+        container.innerHTML = `
+          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 leading-relaxed">
+            <strong>네트워크 연결 확인 안내:</strong> Google Sheets 서버에 연결할 수 없습니다. 인터넷 연결 또는 시트 공유 권한을 확인해 주세요.
+          </div>`;
+      };
+      document.body.appendChild(script);
+    }
+
+    document.addEventListener("DOMContentLoaded", loadQnaFromSheet);
   </script>
 
 </body>
