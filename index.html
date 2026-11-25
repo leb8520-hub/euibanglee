@@ -325,8 +325,7 @@
 
     <!-- TAB 2: Teaching & Stack -->
     <div id="panel-teaching" class="tab-panel hidden space-y-6">
-
-            <!-- Existing Courses & Lab Stack -->
+      <!-- Existing Courses & Lab Stack -->
       <div class="grid md:grid-cols-2 gap-6 text-sm">
         <div class="bg-white p-6 rounded-xl border border-slate-200">
           <h3 class="font-bold text-base text-slate-900 mb-3">강의 과목 (Courses)</h3>
@@ -360,7 +359,7 @@
           </div>
         </div>
       </div>
-    
+
       <!-- Active Course Links & Materials -->
       <div class="bg-white p-6 rounded-xl border border-slate-200 text-sm">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3 mb-5">
@@ -422,7 +421,7 @@
         <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3 mb-5">
           <div>
             <h3 class="font-bold text-base text-slate-900">수업 Q&amp;A 게시판 (Course Q&amp;A)</h3>
-            <p class="text-xs text-slate-500 mt-0.5">질문을 남겨주시면 교수님 확인 후 답변이 등록됩니다.</p>
+            <p class="text-xs text-slate-500 mt-0.5">질문을 남겨주시면 교수님 확인 후 답변이 등록됩니다. (비공개 문의는 자물쇠 상태로 접수·답변 여부가 표시됩니다.)</p>
           </div>
           <div class="flex items-center gap-2">
             <button onclick="loadQnaFromSheet()" class="px-3 py-2 bg-white border border-slate-300 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-50 transition" title="목록 새로고침">
@@ -457,8 +456,9 @@
           </div>
         </div>
       </div>
+
     </div>
-    
+
     <!-- TAB 3: Career & Education -->
     <div id="panel-cv" class="tab-panel hidden">
       <div class="grid md:grid-cols-3 gap-8 text-sm">
@@ -692,28 +692,59 @@
           if (!question || question === '질문 내용') return;
 
           const pubVal = isPublic.trim().toUpperCase();
-          if (pubVal !== "Y" && pubVal !== "공개" && pubVal !== "예") return;
+          const isOpen = (pubVal === "Y" || pubVal === "공개" || pubVal === "예");
 
           const displayAuthor = escapeHtml(maskStudentInfo(rawAuthor));
           const displayCourse = escapeHtml(course || '일반');
           const displayDate = escapeHtml(timestamp.split(' ').slice(0, 3).join(' '));
-          const displayQuestion = escapeHtml(question).replace(/\r?\n/g, '<br>');
-          const displayAnswer = escapeHtml(answer).replace(/\r?\n/g, '<br>');
 
-          html += `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-              <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5">
-                <span class="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">${displayCourse}</span>
-                <span>${displayDate} · ${displayAuthor}</span>
-              </div>
-              <p class="font-medium text-slate-900 mb-3">Q. ${displayQuestion}</p>
-              ${displayAnswer ? `
-                <div class="p-3.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs leading-relaxed">
-                  <span class="font-bold text-emerald-700 block mb-1">A. 교수님 답변</span>
-                  ${displayAnswer}
+          if (isOpen) {
+            const displayQuestion = escapeHtml(question).replace(/\r?\n/g, '<br>');
+            const displayAnswer = escapeHtml(answer).replace(/\r?\n/g, '<br>');
+
+            html += `
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5">
+                  <span class="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">${displayCourse}</span>
+                  <span>${displayDate} · ${displayAuthor}</span>
                 </div>
-              ` : `<p class="text-xs text-slate-400 italic">답변 준비 중입니다.</p>`}
-            </div>`;
+                <p class="font-medium text-slate-900 mb-3">Q. ${displayQuestion}</p>
+                ${displayAnswer ? `
+                  <div class="p-3.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs leading-relaxed">
+                    <span class="font-bold text-emerald-700 block mb-1">A. 교수님 답변</span>
+                    ${displayAnswer}
+                  </div>
+                ` : `<p class="text-xs text-slate-400 italic">답변 준비 중입니다.</p>`}
+              </div>`;
+          } else {
+            // 비공개(익명) 항목: 자물쇠 표시와 함께 완전 마스킹 처리하여 질문/답변 등록 상태 안내
+            const hasAnswer = answer.trim().length > 0;
+            html += `
+              <div class="p-4 rounded-xl bg-slate-100/80 border border-slate-200/90">
+                <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-semibold text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded">${displayCourse}</span>
+                    <span class="inline-flex items-center gap-1 font-medium text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded">
+                      🔒 비공개 문의
+                    </span>
+                  </div>
+                  <span>${displayDate} · ***</span>
+                </div>
+                <p class="font-medium text-slate-500 mb-2.5 flex items-center gap-1.5 select-none">
+                  <span>Q.</span>
+                  <span class="tracking-widest text-slate-400">●●●●●●●●●●●●●●●● (비공개로 보호된 질문입니다)</span>
+                </p>
+                <div class="p-3 rounded-lg bg-white/80 border border-slate-200/80 text-xs flex items-center justify-between">
+                  <span class="text-slate-500 font-medium flex items-center gap-1.5">
+                    <span>🔒 A.</span>
+                    <span class="tracking-widest text-slate-400">${hasAnswer ? '●●●●●●●●●●●● (비공개 답변 완료)' : '답변 대기 중'}</span>
+                  </span>
+                  <span class="${hasAnswer ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-amber-700 bg-amber-50 border-amber-200'} border px-2 py-0.5 rounded font-semibold text-[11px]">
+                    ${hasAnswer ? '답변 완료' : '확인 중'}
+                  </span>
+                </div>
+              </div>`;
+          }
         });
 
         if (html) {
@@ -721,7 +752,7 @@
         } else {
           container.innerHTML = `
             <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-500">
-              등록된 공개 Q&amp;A가 없습니다. (시트의 E열 '공개여부'에 'Y' 또는 '공개'로 표시된 질문만 이곳에 게시됩니다.)
+              등록된 Q&amp;A가 없습니다. 우측 상단의 '+ 질문 남기기' 버튼으로 첫 질문을 등록해 보세요.
             </div>`;
         }
       } catch (e) {
