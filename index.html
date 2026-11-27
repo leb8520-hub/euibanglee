@@ -24,7 +24,8 @@
       </a>
       <div class="flex items-center space-x-5 text-sm font-medium text-slate-600">
         <a href="#research" class="hover:text-blue-600 transition">Research</a>
-        <a href="#archive" onclick="switchTab('teaching', document.getElementById('tab-teaching'))" class="hover:text-blue-600 transition">Teaching &amp; Q&amp;A</a>
+        <a href="working-papers.html" class="hover:text-blue-600 transition">Working Papers (7)</a>
+        <a href="teaching-qna.html" class="hover:text-blue-600 transition">수업자료 &amp; Q&amp;A</a>
         <a href="#archive" onclick="switchTab('pubs', document.getElementById('tab-pubs'))" class="hover:text-blue-600 transition">Publications &amp; CV</a>
         <a href="https://orcid.org/0000-0003-4762-0541" target="_blank" class="text-slate-900 hover:text-blue-600 transition">ORCID ↗</a>
       </div>
@@ -50,10 +51,13 @@
       </p>
       <div class="flex flex-wrap gap-3 text-sm">
         <a href="#archive" onclick="switchTab('pubs', document.getElementById('tab-pubs'))" class="px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition font-medium">
-          논문 실적 보기 (18편)
+          게재 논문 보기 (18편)
         </a>
-        <a href="#archive" onclick="switchTab('teaching', document.getElementById('tab-teaching'))" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
-          수업 자료 및 Q&amp;A
+        <a href="working-papers.html" class="px-4 py-2 bg-white border border-slate-300 text-slate-800 rounded-lg hover:border-blue-400 hover:text-blue-600 transition font-medium">
+          Working Papers (7편) ↗
+        </a>
+        <a href="teaching-qna.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+          수업 자료 및 Q&amp;A ↗
         </a>
         <a href="#archive" onclick="switchTab('cv', document.getElementById('tab-cv'))" class="px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition font-medium">
           주요 경력 및 학력
@@ -95,25 +99,32 @@
   <!-- Interactive Tabbed Archive -->
   <section id="archive" class="max-w-4xl mx-auto px-6 pb-20">
     <!-- Tab Navigation -->
-    <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-4 mb-8">
-      <button id="tab-pubs" onclick="switchTab('pubs', this)" class="tab-btn active px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 transition">
-        Publications (18)
-      </button>
-      <button id="tab-teaching" onclick="switchTab('teaching', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
-        Teaching &amp; Stack
-      </button>
-      <button id="tab-cv" onclick="switchTab('cv', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
-        Career &amp; Education
-      </button>
-      <button id="tab-patents" onclick="switchTab('patents', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
-        Patents &amp; Awards
-      </button>
+    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-4 mb-8">
+      <div class="flex flex-wrap gap-2">
+        <button id="tab-pubs" onclick="switchTab('pubs', this)" class="tab-btn active px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 transition">
+          Publications (18)
+        </button>
+        <button id="tab-cv" onclick="switchTab('cv', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
+          Career &amp; Education
+        </button>
+        <button id="tab-patents" onclick="switchTab('patents', this)" class="tab-btn px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 text-slate-600 bg-white hover:bg-slate-50 transition">
+          Patents &amp; Awards
+        </button>
+      </div>
+      <div class="flex flex-wrap gap-2 text-xs font-medium">
+        <a href="working-papers.html" class="px-3 py-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+          Working Papers (7) ↗
+        </a>
+        <a href="teaching-qna.html" class="px-3 py-2 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition">
+          수업자료 &amp; Q&amp;A ↗
+        </a>
+      </div>
     </div>
 
     <!-- TAB 1: Publications -->
     <div id="panel-pubs" class="tab-panel">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <p class="text-sm text-slate-500">대표 논문 4편이 기본 표시되며, 전체 논문 및 등급별 필터를 선택할 수 있습니다.</p>
+        <div class="text-sm text-slate-500">대표 논문 4편이 기본 표시됩니다. <a href="working-papers.html" class="text-blue-600 font-medium hover:underline ml-1">심사 중 및 연구 중 논문(Working Papers 7편) 보기 →</a></div>
         <div class="flex flex-wrap gap-1.5 text-xs font-medium">
           <button onclick="filterPubs('selected', this)" class="filter-btn active px-3 py-1 rounded-md border border-slate-300 transition">대표 논문 (4)</button>
           <button onclick="filterPubs('all', this)" class="filter-btn px-3 py-1 rounded-md border border-slate-300 bg-white text-slate-600 hover:bg-slate-50 transition">전체 (18)</button>
@@ -323,143 +334,7 @@
       </div>
     </div>
 
-    <!-- TAB 2: Teaching & Stack -->
-    <div id="panel-teaching" class="tab-panel hidden space-y-6">
-      <!-- Existing Courses & Lab Stack -->
-      <div class="grid md:grid-cols-2 gap-6 text-sm">
-        <div class="bg-white p-6 rounded-xl border border-slate-200">
-          <h3 class="font-bold text-base text-slate-900 mb-3">강의 과목 (Courses)</h3>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터사이언스</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터마이닝</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">자연어처리</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">AI최신기술세미나</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">데이터베이스</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">확률과통계</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">운영체제</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">경영정보시스템</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">IT산업론</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">텔레인프라서비스</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">e비즈니스전략</span>
-          </div>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl border border-slate-200">
-          <h3 class="font-bold text-base text-slate-900 mb-3">실습 및 연구 스택 (Lab Stack)</h3>
-          <div class="flex flex-wrap gap-2">
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">Python</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">PyTorch</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">TensorFlow</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">CUDA</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">R</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">SAS</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">Docker</span>
-            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-medium rounded-md">Kubernetes</span>
-            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-md">Oracle DB</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Active Course Links & Materials -->
-      <div class="bg-white p-6 rounded-xl border border-slate-200 text-sm">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3 mb-5">
-          <h3 class="font-bold text-base text-slate-900">26년 2학기 수업 자료 및 제출 링크 (Course Materials &amp; Links)</h3>
-          <span class="text-xs text-slate-500">클릭 시 새 창에서 열립니다</span>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-4">
-          <!-- 자연어처리 -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-bold text-slate-900">자연어처리 (Natural Language Processing)</h4>
-              <span class="text-[11px] font-semibold text-blue-700 bg-blue-100/80 px-2 py-0.5 rounded">실습·강의</span>
-            </div>
-            <p class="text-xs text-slate-500 mb-3">실습 환경 구성, 공개 강의자료, 과제 및 출석대체 증빙 제출</p>
-            <div class="grid grid-cols-2 gap-2 text-xs font-medium">
-              <a href="https://gofile.me/7WVaI/bxpt8l3OP" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
-                <span>환경구성</span><span>↗</span>
-              </a>
-              <a href="https://gofile.me/7WVaI/yNNOEnyxM" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
-                <span>자료 (공개용)</span><span>↗</span>
-              </a>
-              <a href="https://gofile.me/7WVaI/EywGVo2II" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 hover:bg-blue-100 transition">
-                <span>과제물 제출</span><span>↗</span>
-              </a>
-              <a href="https://gofile.me/7WVaI/umoJqFjdB" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 hover:bg-emerald-100 transition">
-                <span>출석대체 증빙</span><span>↗</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- 운영체제 -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-            <div class="flex items-center justify-between mb-2">
-              <h4 class="font-bold text-slate-900">운영체제 (Operating Systems)</h4>
-              <span class="text-[11px] font-semibold text-indigo-700 bg-indigo-100/80 px-2 py-0.5 rounded">실습·강의</span>
-            </div>
-            <p class="text-xs text-slate-500 mb-3">실습 환경 구성, 공개 강의자료, 과제 및 출석대체 증빙 제출</p>
-            <div class="grid grid-cols-2 gap-2 text-xs font-medium">
-              <a href="https://gofile.me/7WVaI/3LehVdKqz" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
-                <span>환경구성</span><span>↗</span>
-              </a>
-              <a href="https://gofile.me/7WVaI/41lUEQhpe" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 hover:border-blue-400 hover:text-blue-600 transition">
-                <span>자료 (공개용)</span><span>↗</span>
-              </a>
-              <a href="https://gofile.me/7WVaI/h2Iz6cdiL" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-700 hover:bg-blue-100 transition">
-                <span>과제물 제출</span><span>↗</span>
-              </a>
-              <a href="https://gofile.me/7WVaI/DT3lkEuhd" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-3 py-2 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 hover:bg-emerald-100 transition">
-                <span>출석대체 증빙</span><span>↗</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 수업 Q&A 게시판 (Google Forms + Google Sheets 연동 완료) -->
-      <div class="bg-white p-6 rounded-xl border border-slate-200 text-sm">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3 mb-5">
-          <div>
-            <h3 class="font-bold text-base text-slate-900">수업 Q&amp;A 게시판 (Course Q&amp;A)</h3>
-            <p class="text-xs text-slate-500 mt-0.5">질문을 남겨주시면 교수님 확인 후 답변이 등록됩니다. (비공개 문의는 자물쇠 상태로 접수·답변 여부가 표시됩니다.)</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="loadQnaFromSheet()" class="px-3 py-2 bg-white border border-slate-300 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-50 transition" title="목록 새로고침">
-              ↻ 새로고침
-            </button>
-            <a href="https://forms.gle/ixFfop3abdvKWKz46" target="_blank" rel="noopener noreferrer" class="px-3 py-2 bg-white border border-slate-300 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-50 transition">
-              새 창으로 열기 ↗
-            </a>
-            <button onclick="toggleQnaForm()" class="px-3.5 py-2 bg-slate-900 text-white text-xs font-medium rounded-lg hover:bg-slate-800 transition">
-              + 질문 남기기
-            </button>
-          </div>
-        </div>
-
-        <!-- 질문 작성 폼 (토글식 Google Form 임베드) -->
-        <div id="qna-form-box" class="hidden mb-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
-          <div class="flex justify-between items-center mb-3">
-            <span class="text-xs font-semibold text-slate-700">질문 작성 (Google Form)</span>
-            <button onclick="toggleQnaForm()" class="text-xs text-slate-500 hover:text-slate-800 font-medium">닫기 ✕</button>
-          </div>
-          <iframe 
-            src="https://forms.gle/ixFfop3abdvKWKz46" 
-            width="100%" height="520" frameborder="0" marginheight="0" marginwidth="0" class="rounded-lg bg-white border border-slate-200">
-            로드 중…
-          </iframe>
-        </div>
-
-        <!-- 질문 & 답변 목록 (Google Sheets 실시간 자동 렌더링 영역) -->
-        <div id="qna-list" class="space-y-4">
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-500">
-            질문 및 답변 목록을 불러오는 중입니다...
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- TAB 3: Career & Education -->
+    <!-- TAB 2: Career & Education -->
     <div id="panel-cv" class="tab-panel hidden">
       <div class="grid md:grid-cols-3 gap-8 text-sm">
         <div class="md:col-span-2 bg-white p-6 rounded-xl border border-slate-200">
@@ -534,7 +409,7 @@
       </div>
     </div>
 
-    <!-- TAB 4: Patents & Awards -->
+    <!-- TAB 3: Patents & Awards -->
     <div id="panel-patents" class="tab-panel hidden">
       <div class="grid md:grid-cols-2 gap-6 text-sm">
         <div class="bg-white p-6 rounded-xl border border-slate-200">
@@ -636,152 +511,6 @@
         }
       });
     }
-
-    function toggleQnaForm() {
-      document.getElementById('qna-form-box').classList.toggle('hidden');
-    }
-
-    // 연동된 Google Sheets ('홈페이지프로필_QA(응답)' -> '설문지 응답 시트1')
-    const SHEET_ID = "1U7cxMnn7PQ5oJhew_7MJXLzvmj-BqproG__VFKngz2w";
-    const SHEET_NAME = "설문지 응답 시트1";
-
-    function maskStudentInfo(rawAuthor) {
-      if (!rawAuthor) return '익명';
-      const parts = String(rawAuthor).trim().split(/\s+/);
-      const name = parts.length > 1 ? parts[parts.length - 1] : parts[0];
-      if (name.length >= 2) {
-        return name[0] + '*' + (name.length > 2 ? name.slice(2) : '');
-      }
-      return name;
-    }
-
-    function escapeHtml(str) {
-      if (str === null || str === undefined) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    window.renderQnaSheetData = function(response) {
-      const container = document.getElementById("qna-list");
-      try {
-        if (!response || response.status === 'error') {
-          throw new Error("시트 응답 오류");
-        }
-        const rows = (response.table && response.table.rows) ? [...response.table.rows].reverse() : [];
-        let html = "";
-
-        rows.forEach(r => {
-          const c = r.c || [];
-          const getVal = (idx) => {
-            if (!c[idx]) return '';
-            return (c[idx].f !== undefined && c[idx].f !== null) ? String(c[idx].f) : (c[idx].v !== undefined && c[idx].v !== null ? String(c[idx].v) : '');
-          };
-
-          // A(0): 타임스탬프, B(1): 학번 이름, C(2): 과목명, D(3): 질문 내용, E(4): 공개여부, F(5): 교수님 답변
-          const timestamp = getVal(0);
-          const rawAuthor = getVal(1);
-          const course = getVal(2);
-          const question = getVal(3);
-          const isPublic = getVal(4);
-          const answer = getVal(5);
-
-          if (!question || question === '질문 내용') return;
-
-          const pubVal = isPublic.trim().toUpperCase();
-          const isOpen = (pubVal === "Y" || pubVal === "공개" || pubVal === "예");
-
-          const displayAuthor = escapeHtml(maskStudentInfo(rawAuthor));
-          const displayCourse = escapeHtml(course || '일반');
-          const displayDate = escapeHtml(timestamp.split(' ').slice(0, 3).join(' '));
-
-          if (isOpen) {
-            const displayQuestion = escapeHtml(question).replace(/\r?\n/g, '<br>');
-            const displayAnswer = escapeHtml(answer).replace(/\r?\n/g, '<br>');
-
-            html += `
-              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                <div class="flex items-center justify-between text-xs text-slate-500 mb-1.5">
-                  <span class="font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">${displayCourse}</span>
-                  <span>${displayDate} · ${displayAuthor}</span>
-                </div>
-                <p class="font-medium text-slate-900 mb-3">Q. ${displayQuestion}</p>
-                ${displayAnswer ? `
-                  <div class="p-3.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs leading-relaxed">
-                    <span class="font-bold text-emerald-700 block mb-1">A. 교수님 답변</span>
-                    ${displayAnswer}
-                  </div>
-                ` : `<p class="text-xs text-slate-400 italic">답변 준비 중입니다.</p>`}
-              </div>`;
-          } else {
-            // 비공개(익명) 항목: 자물쇠 표시와 함께 완전 마스킹 처리하여 질문/답변 등록 상태 안내
-            const hasAnswer = answer.trim().length > 0;
-            html += `
-              <div class="p-4 rounded-xl bg-slate-100/80 border border-slate-200/90">
-                <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
-                  <div class="flex items-center gap-1.5">
-                    <span class="font-semibold text-slate-600 bg-slate-200/80 px-2 py-0.5 rounded">${displayCourse}</span>
-                    <span class="inline-flex items-center gap-1 font-medium text-slate-600 bg-white border border-slate-200 px-2 py-0.5 rounded">
-                      🔒 비공개 문의
-                    </span>
-                  </div>
-                  <span>${displayDate} · ***</span>
-                </div>
-                <p class="font-medium text-slate-500 mb-2.5 flex items-center gap-1.5 select-none">
-                  <span>Q.</span>
-                  <span class="tracking-widest text-slate-400">●●●●●●●●●●●●●●●● (비공개로 보호된 질문입니다)</span>
-                </p>
-                <div class="p-3 rounded-lg bg-white/80 border border-slate-200/80 text-xs flex items-center justify-between">
-                  <span class="text-slate-500 font-medium flex items-center gap-1.5">
-                    <span>🔒 A.</span>
-                    <span class="tracking-widest text-slate-400">${hasAnswer ? '●●●●●●●●●●●● (비공개 답변 완료)' : '답변 대기 중'}</span>
-                  </span>
-                  <span class="${hasAnswer ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-amber-700 bg-amber-50 border-amber-200'} border px-2 py-0.5 rounded font-semibold text-[11px]">
-                    ${hasAnswer ? '답변 완료' : '확인 중'}
-                  </span>
-                </div>
-              </div>`;
-          }
-        });
-
-        if (html) {
-          container.innerHTML = html;
-        } else {
-          container.innerHTML = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-500">
-              등록된 Q&amp;A가 없습니다. 우측 상단의 '+ 질문 남기기' 버튼으로 첫 질문을 등록해 보세요.
-            </div>`;
-        }
-      } catch (e) {
-        console.error("Q&A 렌더링 오류:", e);
-        container.innerHTML = `
-          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 leading-relaxed">
-            <strong>시트 데이터 불러오기 실패:</strong> Google Sheets의 공유 설정('링크가 있는 모든 사용자: 뷰어')과 시트 이름('설문지 응답 시트1')을 확인해 주세요.
-          </div>`;
-      }
-    };
-
-    function loadQnaFromSheet() {
-      const container = document.getElementById("qna-list");
-      const oldScript = document.getElementById("gviz-qna-script");
-      if (oldScript) oldScript.remove();
-
-      const script = document.createElement("script");
-      script.id = "gviz-qna-script";
-      script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json;responseHandler:renderQnaSheetData&sheet=${encodeURIComponent(SHEET_NAME)}`;
-      script.onerror = function() {
-        container.innerHTML = `
-          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 leading-relaxed">
-            <strong>네트워크 연결 확인 안내:</strong> Google Sheets 서버에 연결할 수 없습니다. 인터넷 연결 또는 시트 공유 권한을 확인해 주세요.
-          </div>`;
-      };
-      document.body.appendChild(script);
-    }
-
-    document.addEventListener("DOMContentLoaded", loadQnaFromSheet);
   </script>
 
 </body>
